@@ -1,4 +1,6 @@
 # PictureCarousel（图片轮播展示）
+说明：不支持导航圆点。
+=========
 所用控件：ImageSwitcher
 ---------
 ### 控件简介：<br>

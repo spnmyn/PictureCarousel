@@ -1,4 +1,4 @@
-# PictureCarousel（图片轮播展示）
+# PictureCarousel
 说明：图片自动轮播展示，没有导航圆点。
 =========
 所用控件：ImageSwitcher

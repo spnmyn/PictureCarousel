@@ -10,4 +10,4 @@
 
         既然有两个子ImageView，那么我们要创建两个ImageView给ImageSwitcher。创建ImageViewSwitcher中的ImageView是通过ViewFactory工厂来实现的。
 ### 运行情况：
-使用华为V9手机运行，轮播过程中，有两张轮播图发生互跳现象。问题尚未解决。
+使用华为V9手机，安卓7.0系统。运行过程中，有两张轮播图发生互跳现象。问题尚未解决。

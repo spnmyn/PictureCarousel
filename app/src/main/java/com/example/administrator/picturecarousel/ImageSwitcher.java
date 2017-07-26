@@ -54,7 +54,7 @@ public class ImageSwitcher extends ViewGroup {
 
     private static final long PHOTO_CHANGE_TIME = 4000;
 
-    private Handler mHandler = new Handler() {// 处理图片自动或者手动滚动操作
+    private Handler mHandler = new Handler() {// 处理图片自动或手动轮播操作
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -92,12 +92,12 @@ public class ImageSwitcher extends ViewGroup {
     }
 
     /**
-     * 当View被添加到Window容器的时候才开始执行:生命周期依次先后 onMeasure > onLayout > onDraw >onAttachedToWindow
+     * 当View被添加到Window容器时开始执行：生命周期依次是 onMeasure > onLayout > onDraw >onAttachedToWindow
      */
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mHandler.sendEmptyMessage(START_MSG); // 发送消息让图片自动开始滚动
+        mHandler.sendEmptyMessage(START_MSG); // 发送消息让图片开始自动轮播
     }
 
     @Override
@@ -108,10 +108,8 @@ public class ImageSwitcher extends ViewGroup {
             mImageHeight = getMeasuredHeight();
             int marginLeft = 0;
             scroller.abortAnimation(); // 设置scroller为滚动状态
-            this.scrollTo(0, 0); // 每次重新布局时候，重置滚动初始位置
-            int[] items = {getIndexForItem(1), getIndexForItem(2),
-                    getIndexForItem(3), getIndexForItem(4),
-                    getIndexForItem(5)};
+            this.scrollTo(0, 0); // 每次重新布局时，重置滚动初始位置
+            int[] items = {getIndexForItem(1), getIndexForItem(2), getIndexForItem(3), getIndexForItem(4), getIndexForItem(5)};
             imageItems = items;
             for (int i = 0; i < items.length; i++) {
                 ImageView childView = (ImageView) getChildAt(items[i]);
@@ -146,8 +144,7 @@ public class ImageSwitcher extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
-        if ((action == MotionEvent.ACTION_MOVE)
-                && (mTouchState != TOUCH_STATE_REST)) {
+        if ((action == MotionEvent.ACTION_MOVE) && (mTouchState != TOUCH_STATE_REST)) {
             return true;
         }
         float xLoc = ev.getX();
@@ -160,7 +157,7 @@ public class ImageSwitcher extends ViewGroup {
             case MotionEvent.ACTION_MOVE:
                 Log.e(TAG, "onInterceptTouchEvent ACTION_MOVE");
                 int xDif = (int) Math.abs(mMotionX - xLoc);
-                if (xDif > mTouchSlop) {  // 当我们的水平距离滚动达到我们滚动的最小距离,开始拦截ViewGroup的事件给子控件分发
+                if (xDif > mTouchSlop) {  // 水平滚动距离达到最小滚动距离,开始拦截ViewGroup的事件分发给子控件
                     mTouchState = TOUCH_STATE_SCROLLING;
                 }
                 break;
@@ -182,7 +179,7 @@ public class ImageSwitcher extends ViewGroup {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (scroller.isFinished()) { // scroller还没有开始或者已经完成，以下代码在手指滑动的时候才开始执行
+        if (scroller.isFinished()) { // scroller没有开始或已经完成，以下代码在手指滑动时开始执行
             if (mVelocityTracker == null) {
                 mVelocityTracker = VelocityTracker.obtain();
             }
@@ -191,7 +188,7 @@ public class ImageSwitcher extends ViewGroup {
             float x = event.getX();
             switch (action) {
                 case MotionEvent.ACTION_DOWN:
-                    // 记录按下时的横坐标
+                    // 记录按下时横坐标
                     mMotionX = x;
                 case MotionEvent.ACTION_MOVE:
                     int disX = (int) (mMotionX - x);
@@ -208,7 +205,7 @@ public class ImageSwitcher extends ViewGroup {
                         // 上一张图
                         scrollToPrevious();
                     } else {
-                        // 当前图片
+                        // 当前图
                         scrollBack();
                     }
                     if (mVelocityTracker != null) {
@@ -280,7 +277,7 @@ public class ImageSwitcher extends ViewGroup {
     }
 
     /**
-     * 判断时候滑向前一个
+     * 判断时滑向前一个
      *
      * @param velocityX
      * @return
@@ -290,7 +287,7 @@ public class ImageSwitcher extends ViewGroup {
     }
 
     /**
-     * 判断时候滑向后一个
+     * 判断时滑向后一个
      *
      * @param velocityX
      * @return
